@@ -100,8 +100,9 @@ int CsvParser_getNumFields(const CsvRow *csvRow) {
     return csvRow->numOfFields_;
 }
 
-const char **CsvParser_getFields(const CsvRow *csvRow) {
-    return (const char**)csvRow->fields_;
+const char *const *
+CsvParser_getFields(const CsvRow *csvRow) {
+    return (const char *const *)csvRow->fields_;
 }
 
 CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
