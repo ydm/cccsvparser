@@ -136,10 +136,10 @@ CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
         }
     }
     CsvRow *csvRow = (CsvRow*)malloc(sizeof(CsvRow));
-    csvRow->fields_ = (char**)malloc(acceptedFields * sizeof(char*));
+    csvRow->fields_ = (char**)malloc((size_t) acceptedFields * sizeof(char*));
     csvRow->numOfFields_ = 0;
     int fieldIter = 0;
-    char *currField = (char*)malloc(acceptedCharsInField);
+    char *currField = (char*)malloc((size_t) acceptedCharsInField);
     int inside_complex_field = 0;
     int currFieldCharIter = 0;
     int seriesOfQuotesLength = 0;
@@ -184,7 +184,7 @@ CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
         }
         if (isEndOfFile || ((currChar == csvParser->delimiter_ || currChar == '\n') && ! inside_complex_field) ){
             currField[lastCharIsQuote ? currFieldCharIter - 1 : currFieldCharIter] = '\0';
-            csvRow->fields_[fieldIter] = (char*)malloc(currFieldCharIter + 1);
+            csvRow->fields_[fieldIter] = (char*)malloc((size_t) currFieldCharIter + 1);
             strcpy(csvRow->fields_[fieldIter], currField);
             free(currField);
             csvRow->numOfFields_++;
@@ -192,11 +192,12 @@ CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
                 return csvRow;
             }
             if (csvRow->numOfFields_ != 0 && csvRow->numOfFields_ % acceptedFields == 0) {
-                csvRow->fields_ = (char**)realloc(csvRow->fields_, ((numRowRealloc + 2) * acceptedFields) * sizeof(char*));
+                size_t s = (size_t) ((numRowRealloc + 2) * acceptedFields) * sizeof(char*);
+                csvRow->fields_ = (char**)realloc(csvRow->fields_, s);
                 numRowRealloc++;
             }
             acceptedCharsInField = 64;
-            currField = (char*)malloc(acceptedCharsInField);
+            currField = (char*)malloc((size_t) acceptedCharsInField);
             currFieldCharIter = 0;
             fieldIter++;
             inside_complex_field = 0;
@@ -205,7 +206,7 @@ CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
             currFieldCharIter++;
             if (currFieldCharIter == acceptedCharsInField - 1) {
                 acceptedCharsInField *= 2;
-                currField = (char*)realloc(currField, acceptedCharsInField);
+                currField = (char*)realloc(currField, (size_t) acceptedCharsInField);
             }
         }
         lastCharIsQuote = (currChar == '\"') ? 1 : 0;
