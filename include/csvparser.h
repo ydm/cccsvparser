@@ -10,18 +10,20 @@ extern "C" {
 typedef struct CsvRow {
     char **fields_;
     int numOfFields_;
+    int: 32;                    // padding
 } CsvRow;
 
 typedef struct CsvParser {
     char *filePath_;
-    char delimiter_;
-    int firstLineIsHeader_;
     char *errMsg_;
     CsvRow *header_;
     FILE *fileHandler_;
+    char *csvString_;
+    int firstLineIsHeader_;
 	int fromString_;
-	char *csvString_;
 	int csvStringIter_;
+    char delimiter_;
+    int: 24;                    // 3 bytes padding
 } CsvParser;
 
 
