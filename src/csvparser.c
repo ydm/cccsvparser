@@ -14,7 +14,7 @@ CsvParser *CsvParser_new(const char *filePath, const char *delimiter, int firstL
     if (filePath == NULL) {
         csvParser->filePath_ = NULL;
     } else {
-        int filePathLen = strlen(filePath);
+        size_t filePathLen = strlen(filePath);
         csvParser->filePath_ = (char*)malloc((filePathLen + 1));
         strcpy(csvParser->filePath_, filePath);
     }
@@ -40,7 +40,7 @@ CsvParser *CsvParser_new_from_string(const char *csvString, const char *delimite
 	CsvParser *csvParser = CsvParser_new(NULL, delimiter, firstLineIsHeader);
 	csvParser->fromString_ = 1;	
 	if (csvString != NULL) {
-		int csvStringLen = strlen(csvString);
+		size_t csvStringLen = strlen(csvString);
 		csvParser->csvString_ = (char*)malloc(csvStringLen + 1);
 		strcpy(csvParser->csvString_, csvString);
 	}	
@@ -225,7 +225,7 @@ void _CsvParser_setErrorMessage(CsvParser *csvParser, const char *errorMessage) 
     if (csvParser->errMsg_ != NULL) {
         free(csvParser->errMsg_);
     }
-    int errMsgLen = strlen(errorMessage);
+    size_t errMsgLen = strlen(errorMessage);
     csvParser->errMsg_ = (char*)malloc(errMsgLen + 1);
     strcpy(csvParser->errMsg_, errorMessage);
 }
