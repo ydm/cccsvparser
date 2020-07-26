@@ -146,7 +146,7 @@ CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
     int lastCharIsQuote = 0;
     int isEndOfFile = 0;
     while (1) {
-        char currChar = (csvParser->fromString_) ? csvParser->csvString_[csvParser->csvStringIter_] : fgetc(csvParser->fileHandler_);
+        int currChar = (csvParser->fromString_) ? csvParser->csvString_[csvParser->csvStringIter_] : fgetc(csvParser->fileHandler_);
         csvParser->csvStringIter_++;
         int endOfFileIndicator;
         if (csvParser->fromString_) {
@@ -202,7 +202,7 @@ CsvRow *_CsvParser_getRow(CsvParser *csvParser) {
             fieldIter++;
             inside_complex_field = 0;
         } else {
-            currField[currFieldCharIter] = currChar;
+            currField[currFieldCharIter] = (char) currChar;
             currFieldCharIter++;
             if (currFieldCharIter == acceptedCharsInField - 1) {
                 acceptedCharsInField *= 2;
