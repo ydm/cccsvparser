@@ -33,3 +33,7 @@ This library was successfully tested in MSVC 2015, by just copying all the sourc
 Note that you'll probably need to define _CRT_SECURE_NO_WARNINGS
 
 
+Disclaimer
+==========
+
+This library is a copy of [cccsvparser](https://sourceforge.net/projects/cccsvparser/) and is originally written by [talh123](https://sourceforge.net/u/talh123/profile/).  Since the original library isn't touched for more than 4 years, I took it to improve const-correctness, types, padding, etc.
